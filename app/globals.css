@@ -1,157 +1,105 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --color-bg: #fafafa;
-  --color-text: #1a1a1a;
-  --gutter: 16px;
-}
-
-* {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  box-sizing: border-box;
+  --bg-color: #ffffff;
+  --text-primary: #111111;
+  --text-secondary: #666666;
+  --grid-gap: 24px;
 }
 
 body {
-  font-family: 'Inter', system-ui, sans-serif;
-  background-color: var(--color-bg);
-  color: var(--color-text);
-  margin: 0;
-  padding: 0;
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #d1d5db;
-  border-radius: 3px;
-}
-
-/* ===== MASONRY GRID - FIXED ===== */
+/* === REFINED MASONRY GRID === */
 .my-masonry-grid {
   display: flex;
-  width: 100%;
-  margin-left: calc(var(--gutter) * -1);
+  margin-left: calc(-1 * var(--grid-gap));
+  /* Offset gutter */
+  width: auto;
 }
 
 .my-masonry-grid_column {
-  padding-left: var(--gutter);
+  padding-left: var(--grid-gap);
+  /* Gutter size */
   background-clip: padding-box;
 }
 
-/* ===== GALLERY CARD ===== */
-.gallery-card {
+/* === IMAGE CARD === */
+.gallery-item {
   position: relative;
+  margin-bottom: var(--grid-gap);
+  border-radius: 0;
+  /* Sharp edges for cleaner look */
   overflow: hidden;
-  border-radius: 8px;
-  background: #f3f4f6;
-  margin-bottom: var(--gutter);
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: #f5f5f5;
+  /* Placeholder color */
+  transition: transform 0.4s ease-out;
+  cursor: zoom-in;
 }
 
-.gallery-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.15);
+/* Elegant, subtle interaction */
+.gallery-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 
-.gallery-card img {
+.gallery-item img {
   display: block;
   width: 100%;
   height: auto;
-  transition: transform 0.4s ease;
+  transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.3s ease;
 }
 
-.gallery-card:hover img {
-  transform: scale(1.02);
+.gallery-item:hover img {
+  transform: scale(1.03);
 }
 
-/* Caption overlay */
-.caption-overlay {
+/* === CAPTION OVERLAY === */
+.gallery-caption {
   position: absolute;
   bottom: 0;
   left: 0;
-  right: 0;
-  padding: 40px 16px 16px;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, transparent 100%);
+  width: 100%;
+  padding: 24px 20px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  pointer-events: none;
 }
 
-.gallery-card:hover .caption-overlay {
+.gallery-item:hover .gallery-caption {
   opacity: 1;
+  transform: translateY(0);
 }
 
-/* Skeleton loader */
-.skeleton {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: 200% 0;
-  }
-
-  100% {
-    background-position: -200% 0;
-  }
-}
-
-/* Fade in animation */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fade-in {
-  animation: fadeInUp 0.5s ease forwards;
-}
-
-/* Loading spinner */
-.loader {
-  width: 20px;
-  height: 20px;
-  border: 2px solid #e5e7eb;
-  border-top-color: #374151;
+/* === LOADER === */
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid #ddd;
+  border-top-color: #333;
   border-radius: 50%;
-  animation: spin 0.7s linear infinite;
+  animation: rotate 0.8s linear infinite;
 }
 
-@keyframes spin {
-  to {
+@keyframes rotate {
+  100% {
     transform: rotate(360deg);
   }
 }
 
-/* ===== RESPONSIVE ADJUSTMENTS ===== */
-@media (max-width: 768px) {
+/* Mobile Tweak */
+@media (max-width: 640px) {
   :root {
-    --gutter: 12px;
+    --grid-gap: 16px;
   }
 }
